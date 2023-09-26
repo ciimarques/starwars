@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import StarWarsContext from '../context/StarWarsContext';
+import StarWarsContext from '../../context/StarWarsContext';
 
 function Table() {
   const starWarsContext = useContext(StarWarsContext);
@@ -23,7 +23,7 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {starWarsContext.planets.map((planet) => (
+        {starWarsContext.filteredPlanets.map((planet) => (
           <tr key={ planet.name }>
             <td>{ planet.name }</td>
             <td>{ planet.rotation_period}</td>
@@ -37,7 +37,7 @@ function Table() {
             <td>{ planet.films }</td>
             <td>{ planet.created}</td>
             <td>{ planet.edited }</td>
-            <td>{planet.url}</td>
+            <td>{ planet.url }</td>
           </tr>
         ))}
       </tbody>

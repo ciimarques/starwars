@@ -13,3 +13,10 @@ export type Planet = {
   edited: string;
   url: string;
 };
+
+export type FilterPlanet = {
+  name: string;
+  column: string;
+  comparison: string;
+  value: string;
+};

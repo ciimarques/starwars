@@ -3,6 +3,8 @@ import { Planet } from '../types';
 
 type StarWarsContextType = {
   planets:Planet[];
+  filteredPlanets: Planet[];
+  handleFilter: (filterPlanet: Planet[]) => void
 };
 const StarWarsContext = createContext({} as StarWarsContextType);
 
