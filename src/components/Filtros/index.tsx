@@ -11,6 +11,7 @@ const INITIAL_STATE = {
 function Filtereds() {
   const [filterName, setFilterName] = useState<FilterPlanet>(INITIAL_STATE);
   const [filter, setFilter] = useState<FilterPlanet>(INITIAL_STATE);
+  const [filters, setFilters] = useState<FilterPlanet[]>([]);
   const { planets, handleFilter } = useContext(StarWarsContext);
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -37,27 +38,42 @@ function Filtereds() {
     });
     handleFilter(filteredPlanets);
   };
+  
   const filterPlanetsByComparison = () => {
-    const filteredPlanets = planets.filter((planet) => {
-      const { column, comparison, value } = filter;
-      const comp = comparison || 'maior que';
-      if (planet[column] !== undefined) {
-        const columnValue = parseFloat(planet[column]);
-        switch (comp) {
-          case 'maior que':
-            return columnValue > parseFloat(value);
-          case 'menor que':
-            return columnValue < parseFloat(value);
-          case 'igual a':
-            return columnValue === parseFloat(value);
-          default:
-            return false;
+    console.log('entrou');
+    
+    let filteredPlanets = planets;
+    filters.forEach(currentFilter => {
+      filteredPlanets= filteredPlanets.filter((planet) => {
+        const { column, comparison, value } = currentFilter;
+        const comp = comparison || 'maior que';
+        if (planet[column] !== undefined) {
+          const columnValue = parseFloat(planet[column]);
+          switch (comp) {
+            case 'maior que':
+              return columnValue > parseFloat(value);
+            case 'menor que':
+              return columnValue < parseFloat(value);
+            case 'igual a':
+              return columnValue === parseFloat(value);
+            default:
+              return false;
         }
       }
-      return false;
+        return false;
+      });
     });
-    handleFilter(filteredPlanets);
+     handleFilter(filteredPlanets);
   };
+  useEffect(() => {
+    filterPlanetsByComparison();
+  }, [filters]);
+  const AddFilter = () => {
+    const newFilters = [...filters, filter];
+  setFilters(newFilters);
+    console.log(filters); 
+  }
+  
   return (
     <>
       <input
@@ -99,7 +115,7 @@ function Filtereds() {
       />
       <button
         data-testid="button-filter"
-        onClick={ filterPlanetsByComparison }
+        onClick={ AddFilter }
       >
         Filter
       </button>
