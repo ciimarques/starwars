@@ -38,13 +38,10 @@ function Filtereds() {
     });
     handleFilter(filteredPlanets);
   };
-  
   const filterPlanetsByComparison = () => {
-    console.log('entrou');
-    
     let filteredPlanets = planets;
-    filters.forEach(currentFilter => {
-      filteredPlanets= filteredPlanets.filter((planet) => {
+    filters.forEach((currentFilter) => {
+      filteredPlanets = filteredPlanets.filter((planet) => {
         const { column, comparison, value } = currentFilter;
         const comp = comparison || 'maior que';
         if (planet[column] !== undefined) {
@@ -58,22 +55,20 @@ function Filtereds() {
               return columnValue === parseFloat(value);
             default:
               return false;
+          }
         }
-      }
         return false;
       });
     });
-     handleFilter(filteredPlanets);
+    handleFilter(filteredPlanets);
   };
   useEffect(() => {
     filterPlanetsByComparison();
   }, [filters]);
   const AddFilter = () => {
     const newFilters = [...filters, filter];
-  setFilters(newFilters);
-    console.log(filters); 
-  }
-  
+    setFilters(newFilters);
+  };
   return (
     <>
       <input
