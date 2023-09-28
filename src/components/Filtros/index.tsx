@@ -8,11 +8,19 @@ const INITIAL_STATE = {
   comparison: '',
   value: '0',
 };
+const initialOptions = [
+  'population',
+  'orbital_period',
+  'diameter',
+  'rotation_period',
+  'surface_water',
+];
 function Filtereds() {
   const [filterName, setFilterName] = useState<FilterPlanet>(INITIAL_STATE);
   const [filter, setFilter] = useState<FilterPlanet>(INITIAL_STATE);
   const [filters, setFilters] = useState<FilterPlanet[]>([]);
   const { planets, handleFilter } = useContext(StarWarsContext);
+  const [options, setOptions] = useState(initialOptions);
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFilterName({
@@ -68,6 +76,15 @@ function Filtereds() {
   const AddFilter = () => {
     const newFilters = [...filters, filter];
     setFilters(newFilters);
+    const selectedOptions = newFilters.map((select) => select.column);
+    const updatedOptions = initialOptions.filter(
+      (option) => !selectedOptions.includes(option),
+    );
+    setOptions(updatedOptions);
+    setFilter({
+      ...filter,
+      column: updatedOptions[0],
+    });
   };
   return (
     <>
@@ -85,11 +102,11 @@ function Filtereds() {
         name="column"
         onChange={ handleChange }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        {options.map((option) => (
+          <option key={ option } value={ option }>
+            { option }
+          </option>
+        ))}
       </select>
       <select
         data-testid="comparison-filter"
