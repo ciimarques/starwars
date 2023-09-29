@@ -89,6 +89,10 @@ function Filtereds() {
   const removeAllFilters = () => {
     setFilters([]);
     setOptions(initialOptions);
+    setFilter({
+      ...filter,
+      column: 'population',
+    });
   };
   return (
     <>

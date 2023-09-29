@@ -79,4 +79,18 @@ describe('Testa o Componete <App.tsx />', () => {
     expect(comparisonSelect).toHaveValue('menor que');
     expect(actualValue).toBe(500);
   });
+  test('testa removeAllFilters', async () => {
+    render(
+      <StarWarsProvider>
+        <App />
+       </StarWarsProvider>);
+    const addButton = screen.getByTestId('button-filter');
+    userEvent.click(addButton);
+    const filterAdd = screen.getAllByTestId('filter').length;
+    const btnRemoveAllFilters = screen.getByTestId('button-remove-filters');
+    userEvent.click(btnRemoveAllFilters);
+    const columnFilter = screen.getByTestId('column-filter') as HTMLSelectElement;
+    expect(filterAdd).toBeGreaterThan(0);
+    expect(columnFilter.value).toBe('population');
+  })
 });
