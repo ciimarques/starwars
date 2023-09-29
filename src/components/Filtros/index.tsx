@@ -86,8 +86,53 @@ function Filtereds() {
       column: updatedOptions[0],
     });
   };
+  const removeAllFilters = () => {
+    setFilters([]);
+    setOptions(initialOptions);
+  };
   return (
     <>
+      {filters.map((filterCurrent, index) => (
+        <div key={ index } data-testid="filter">
+          <select
+            data-testid={ `filter-column-${index}` }
+            value={ filterCurrent.column }
+            name="column"
+            onChange={ handleChange }
+          >
+            { options.map((option) => (
+              <option key={ option } value={ option }>
+                { option }
+
+              </option>
+            ))}
+          </select>
+          <select
+            data-testid={ `filter-comparison-${index}` }
+            value={ filterCurrent.comparison }
+            name="comparison"
+            onChange={ handleChange }
+          >
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
+          </select>
+          <input
+            type="number"
+            data-testid={ `filter-value-${index}` }
+            value={ filterCurrent.value }
+            name="value"
+            onChange={ handleChange }
+          />
+          <button
+            data-testid={ `'remove-filters'-${index}` }
+            onClick={ () => setFilters(filters.filter((_, i) => i !== index)) }
+          >
+            Remover
+          </button>
+        </div>
+      ))}
+
       <input
         data-testid="name-filter"
         type="text"
@@ -130,6 +175,12 @@ function Filtereds() {
         onClick={ AddFilter }
       >
         Filter
+      </button>
+      <button
+        onClick={ removeAllFilters }
+        data-testid="button-remove-filters"
+      >
+        Remover Filtragens
       </button>
     </>
   );
