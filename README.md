@@ -1,4 +1,4 @@
-# Star Wars Planets Search com TypeScript, Vite e React
+# Star Wars Planets Search 
 
 ## Sobre o Projeto
 
